@@ -12,9 +12,10 @@ export default function App() {
   
   useEffect(()=> {
     dispatch(fetchUsers());
-  },[])
+  },[dispatch])
   
   if(loading) return <p>API request in progress...</p>
+  
   return (
     <div className="App">
       <Card />
