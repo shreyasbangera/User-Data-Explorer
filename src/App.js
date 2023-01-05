@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
+import Card from './Card';
 
-function App() {
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchSingleUser, fetchUsers } from './action'
+import { useEffect } from "react";
+
+export default function App() {
+  const users = useSelector(state=> state.users)
+  const loading = useSelector(state => state.loading)
+  const dispatch = useDispatch();
+  
+  useEffect(()=> {
+    dispatch(fetchUsers());
+  },[])
+  
+  if(loading) return <p>API request in progress...</p>
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Card />
+      <div className="btncontainer">
+      {users.map((user) => (
+      <button key={user.id} onClick={()=> dispatch(fetchSingleUser(user.id))}>{user.id}</button>
+      ))}
+      </div>
     </div>
   );
 }
-
-export default App;
