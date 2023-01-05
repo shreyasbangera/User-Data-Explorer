@@ -18,7 +18,6 @@ const usersReducer =(state = initialState, action)=>{
       return{
         ...state,
         singleuser: action.payload,
-        loading: false
         }
     default:
       return state;
